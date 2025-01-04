@@ -24,5 +24,19 @@
 		"video",
 		"sub-ita",
 		"streaming"
+	],
+	"iframe": true,
+	"iFrameRegExp": ".*",
+	"settings": [
+		{
+			"id": "lang",
+			"multiLanguage": true
+		},
+		{
+			"id": "cover",
+			"title": "Show Cover",
+			"icon": "fad fa-images",
+			"value": true
+		}
 	]
 }
