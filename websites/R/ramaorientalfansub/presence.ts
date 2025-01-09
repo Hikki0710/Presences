@@ -70,7 +70,7 @@ presence.on("UpdateData", async () => {
 			: Assets.Logo;
 		presenceData.details = `${strings.viewShow} ${document
 			.querySelector("h2")
-			.textContent.replace(/\s/g, "")}`;
+			.textContent.replace(/\n\s+/g, "")}`;
 	} else if (pathname.startsWith("/watch")) {
 		presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play;
 		presenceData.smallImageText = paused ? strings.paused : strings.play;
