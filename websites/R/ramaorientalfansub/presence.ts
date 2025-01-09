@@ -61,7 +61,17 @@ presence.on("UpdateData", async () => {
 	}
 
 	if (pathname.startsWith("/homepage")) presenceData.details = strings.viewHome;
-	else if (pathname.startsWith("/watch")) {
+	else if (pathname.startsWith("/drama")) {
+		presenceData.smallImageKey = Assets.Viewing;
+		presenceData.smallImageText = strings.viewShow;
+		presenceData.largeImageKey = cover
+			? document.querySelector<HTMLImageElement>(".anime-image > img")?.src ??
+			  Assets.Logo
+			: Assets.Logo;
+		presenceData.details = `${strings.viewShow} ${document
+			.querySelector("h2")
+			.textContent.replace(/\s/g, "")}`;
+	} else if (pathname.startsWith("/watch")) {
 		presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play;
 		presenceData.smallImageText = paused ? strings.paused : strings.play;
 		presenceData.largeImageKey = cover
@@ -71,9 +81,11 @@ presence.on("UpdateData", async () => {
 		presenceData.details = `${strings.play} ${
 			document.querySelector(".anime-data > h4 > a").textContent
 		}`;
-		presenceData.state = `Episode: ${document
-			.querySelector(".current-episode > .episode-list-item-number")
-			.textContent.replace(/\s/g, "")}`;
+		presenceData.state = document.querySelector(".current-episode")
+			? `Episode: ${document
+					.querySelector(".current-episode > .episode-list-item-number")
+					.textContent.replace(/\s/g, "")}`
+			: "movie";
 		if (!isNaN(duration) && !paused) {
 			[presenceData.startTimestamp, presenceData.endTimestamp] =
 				presence.getTimestamps(current, duration);
