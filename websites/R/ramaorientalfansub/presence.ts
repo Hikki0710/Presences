@@ -15,6 +15,7 @@ async function getStrings() {
 			viewCategory: "general.viewCategory",
 			viewHome: "general.viewHome",
 			viewShow: "general.viewShow",
+			browsing: "general.browsing",
 		},
 		await presence.getSetting<string>("lang").catch(() => "en")
 	);
@@ -49,8 +50,8 @@ presence.on("UpdateData", async () => {
 	}
 
 	if (
-		pathname !== "/" &&
-		document.querySelector<HTMLInputElement>("input")?.value
+		document.querySelector<HTMLInputElement>("input")?.value &&
+		document.querySelector<HTMLInputElement>("input")?.name === "s_keyword"
 	) {
 		presenceData.details = `${strings.search} ${
 			document.querySelector<HTMLInputElement>("input")?.value
@@ -90,6 +91,18 @@ presence.on("UpdateData", async () => {
 			[presenceData.startTimestamp, presenceData.endTimestamp] =
 				presence.getTimestamps(current, duration);
 		}
+	} else if (pathname.startsWith("/genere")) {
+		presenceData.smallImageKey = Assets.Viewing;
+		presenceData.smallImageText = strings.viewCategory;
+		presenceData.details = `${strings.viewCategory} ${pathname
+			.split("/")[2]
+			.replaceAll("-", " ")}`;
+	} else if (pathname.startsWith("/paese")) {
+		presenceData.smallImageKey = Assets.Viewing;
+		presenceData.details = `${strings.browsing}`;
+		presenceData.state = `Drama: ${pathname
+			.split("/")[2]
+			.replaceAll("-", " ")}`;
 	}
 
 	presence.setActivity(presenceData);
