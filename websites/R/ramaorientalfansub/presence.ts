@@ -71,7 +71,7 @@ presence.on("UpdateData", async () => {
 			: Assets.Logo;
 		presenceData.details = `${strings.viewShow} ${document
 			.querySelector("h2")
-			.textContent.replace(/\n\s+/g, "")}`;
+			.textContent.trim()}`;
 	} else if (pathname.startsWith("/watch")) {
 		presenceData.smallImageKey = paused ? Assets.Pause : Assets.Play;
 		presenceData.smallImageText = paused ? strings.paused : strings.play;
@@ -85,7 +85,7 @@ presence.on("UpdateData", async () => {
 		presenceData.state = document.querySelector(".current-episode")
 			? `Episode: ${document
 					.querySelector(".current-episode > .episode-list-item-number")
-					.textContent.replace(/\s/g, "")}`
+					.textContent.trim()}`
 			: "movie";
 		if (!isNaN(duration) && !paused) {
 			[presenceData.startTimestamp, presenceData.endTimestamp] =
